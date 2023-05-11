@@ -8,15 +8,31 @@ export default function Jogo() {
   const [inputDisabled, setInputDisabled] = useState(true)
   const [botoesDisabled, setBotoesDisabled] = useState(true)
   const [palavra, setPalavra] = useState('')
+  const [letrasExibidas, setLetrasExibidas] = useState([])
 
   function habilitarLetras() {
     setBotoesDisabled(false)
-    const palavraSorteada = palavras[Math.floor(Math.random() * palavra.length)]
+    const palavraSorteada =
+      palavras[Math.floor(Math.random() * palavras.length)]
     setPalavra(palavraSorteada)
+    console.log(palavraSorteada)
+    setLetrasExibidas(new Array(palavraSorteada.length).fill('_'))
   }
 
   function handleLetterClick(letra) {
-    // console.log(letra)
+    const indices = []
+    for (let i = 0; i < palavra.length; i++) {
+      if (palavra[i] === letra) {
+        indices.push(i)
+      }
+    }
+    if (indices.length > 0) {
+      const novasLetrasExibidas = [...letrasExibidas]
+      for (let i = 0; i < indices.length; i++) {
+        novasLetrasExibidas[indices[i]] = letra
+      }
+      setLetrasExibidas(novasLetrasExibidas)
+    }
   }
 
   return (
@@ -32,7 +48,7 @@ export default function Jogo() {
           <button className="btn-escolher" onClick={habilitarLetras}>
             Escolher Palavra
           </button>
-          <div className="palavra">{palavra.split('').map(() => '_ ')}</div>
+          <div className="palavra">{letrasExibidas.join(' ')}</div>
         </div>
       </div>
       <Letras disabled={botoesDisabled} onLetterClick={handleLetterClick} />
