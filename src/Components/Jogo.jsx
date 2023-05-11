@@ -1,9 +1,18 @@
 import React, { useState } from 'react'
 import Letras from './Letras'
 import palavras from '../palavras'
+import forca0 from '../assets/forca0.png'
+import forca1 from '../assets/forca1.png'
+import forca2 from '../assets/forca2.png'
+import forca3 from '../assets/forca3.png'
+import forca4 from '../assets/forca4.png'
+import forca5 from '../assets/forca5.png'
+import forca6 from '../assets/forca6.png'
+
+const imagensForca = [forca0, forca1, forca2, forca3, forca4, forca5, forca6]
 
 export default function Jogo() {
-  let contagemErros = 0
+  const [contagemErros, setContagemErros] = useState(0)
 
   const [inputDisabled, setInputDisabled] = useState(true)
   const [botoesDisabled, setBotoesDisabled] = useState(true)
@@ -33,6 +42,11 @@ export default function Jogo() {
       }
       setLetrasExibidas(novasLetrasExibidas)
     }
+    if (!palavra.includes(letra)) {
+      setContagemErros(prevContagemErros => prevContagemErros + 1)
+
+      console.log(`Erros: ${contagemErros + 1}`)
+    }
   }
 
   return (
@@ -42,7 +56,7 @@ export default function Jogo() {
       </header>
       <div className="container">
         <div>
-          <img src="assets/forca0.png" alt="" />
+          <img src={imagensForca[contagemErros]} alt="" />
         </div>
         <div className="container-palavra">
           <button className="btn-escolher" onClick={habilitarLetras}>
