@@ -1,4 +1,3 @@
-import palavras from '../palavras'
 import Jogo from './Jogo'
 
 function App() {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import alfabeto from '../alfabeto'
 
 function Letras(props) {
@@ -14,6 +14,7 @@ function Letras(props) {
     <div className="btn-container">
       {alfabeto.map(letra => (
         <button
+          data-test="letter"
           disabled={disabled || props.letrasClicadas.includes(letra)}
           onClick={() => handleClick(letra)}
           className={`btn-letras ${

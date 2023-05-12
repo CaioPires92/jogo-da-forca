@@ -75,18 +75,24 @@ export default function Jogo() {
 
   return (
     <div>
-      <header>
-        <h1>Bônus: Input de Chute</h1>
-      </header>
       <div className="container">
         <div>
-          <img src={imagensForca[contagemErros]} alt="" />
+          <img
+            src={imagensForca[contagemErros]}
+            alt=""
+            data-test="game-image"
+          />
         </div>
-        <div className="container-palavra">
-          <button className="btn-escolher" onClick={habilitarLetras}>
+        <div className="container-palavra ">
+          <button
+            className="btn-escolher"
+            onClick={habilitarLetras}
+            data-test="choose-word"
+          >
             Escolher Palavra
           </button>
           <div
+            data-test="word"
             className={`palavra ${
               perdeu || ganhou ? (perdeu ? 'vermelho' : 'verde') : ''
             }`}
