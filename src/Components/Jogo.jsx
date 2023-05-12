@@ -19,6 +19,9 @@ export default function Jogo() {
   const [botoesDisabled, setBotoesDisabled] = useState(true)
   const [palavra, setPalavra] = useState('')
   const [letrasExibidas, setLetrasExibidas] = useState([])
+  const [resetaJogo, setResetaJogo] = useState(false)
+
+  const [letrasClicadas, setLetrasClicadas] = useState([])
 
   const perdeu = contagemErros === imagensForca.length - 1
   const ganhou = palavra === letrasExibidas.join('')
@@ -27,8 +30,20 @@ export default function Jogo() {
 
   console.log('ganhou perdeu', ganhou, perdeu)
 
+  console.log('reseta Jogo: ', resetaJogo)
+
+  function handleResetaJogo() {
+    setContagemErros(0)
+    setResetaJogo(true)
+    setLetrasClicadas([])
+  }
+
   function habilitarLetras() {
     setBotoesDisabled(false)
+
+    handleResetaJogo()
+
+    console.log('reseta Jogo: ', resetaJogo)
 
     const palavraSorteada =
       palavras[Math.floor(Math.random() * palavras.length)]
@@ -68,7 +83,7 @@ export default function Jogo() {
           <img src={imagensForca[contagemErros]} alt="" />
         </div>
         <div className="container-palavra">
-          <button className="btn-escolher" onClick={habilitarLetras} >
+          <button className="btn-escolher" onClick={habilitarLetras}>
             Escolher Palavra
           </button>
           <div
@@ -82,6 +97,8 @@ export default function Jogo() {
       </div>
 
       <Letras
+        setLetrasClicadas={setLetrasClicadas}
+        letrasClicadas={letrasClicadas}
         disabled={perdeu || ganhou || botoesDisabled}
         onLetterClick={handleLetterClick}
       />
