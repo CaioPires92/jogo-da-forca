@@ -15,7 +15,7 @@ function Letras(props) {
     <div className="btn-container">
       {alfabeto.map(letra => (
         <button
-          disabled={disabled}
+          disabled={disabled || letrasClicadas.includes(letra)}
           onClick={() => handleClick(letra)}
           className={`btn-letras ${
             letrasClicadas.includes(letra) ? 'clicked' : ''

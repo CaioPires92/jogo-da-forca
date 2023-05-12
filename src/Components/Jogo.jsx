@@ -11,16 +11,24 @@ import forca6 from '../assets/forca6.png'
 
 const imagensForca = [forca0, forca1, forca2, forca3, forca4, forca5, forca6]
 
+console.log(imagensForca)
+
 export default function Jogo() {
   const [contagemErros, setContagemErros] = useState(0)
-
   const [inputDisabled, setInputDisabled] = useState(true)
   const [botoesDisabled, setBotoesDisabled] = useState(true)
   const [palavra, setPalavra] = useState('')
   const [letrasExibidas, setLetrasExibidas] = useState([])
 
+  const perdeu = contagemErros === imagensForca.length - 1
+
   function habilitarLetras() {
-    setBotoesDisabled(false)
+    if (imagensForca.length - 1 === contagemErros) {
+      setBotoesDisabled(true)
+    } else {
+      setBotoesDisabled(false)
+    }
+
     const palavraSorteada =
       palavras[Math.floor(Math.random() * palavras.length)]
     setPalavra(palavraSorteada)
@@ -44,10 +52,10 @@ export default function Jogo() {
     }
     if (!palavra.includes(letra)) {
       setContagemErros(prevContagemErros => prevContagemErros + 1)
-
-      console.log(`Erros: ${contagemErros + 1}`)
     }
   }
+
+  console.log(`Erros: ${contagemErros}`)
 
   return (
     <div>
@@ -62,10 +70,20 @@ export default function Jogo() {
           <button className="btn-escolher" onClick={habilitarLetras}>
             Escolher Palavra
           </button>
-          <div className="palavra">{letrasExibidas.join(' ')}</div>
+          <div className={`palavra ${perdeu && 'palavra vermelho'}`}>
+            {perdeu ? palavra : letrasExibidas.join(' ')}
+          </div>
         </div>
       </div>
-      <Letras disabled={botoesDisabled} onLetterClick={handleLetterClick} />
+      {perdeu && (
+        <div className="voce-perdeu">
+          <h2>Você Perdeu</h2>
+        </div>
+      )}
+      <Letras
+        disabled={perdeu || botoesDisabled}
+        onLetterClick={handleLetterClick}
+      />
       <div className="container-input">
         <h2>Ja sei a palavra!</h2>
         <input disabled={inputDisabled} type="text" />
