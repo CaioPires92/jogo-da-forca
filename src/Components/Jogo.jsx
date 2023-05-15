@@ -8,6 +8,7 @@ import forca3 from '../assets/forca3.png'
 import forca4 from '../assets/forca4.png'
 import forca5 from '../assets/forca5.png'
 import forca6 from '../assets/forca6.png'
+import Chute from './Chute'
 
 const imagensForca = [forca0, forca1, forca2, forca3, forca4, forca5, forca6]
 
@@ -40,6 +41,7 @@ export default function Jogo() {
 
   function habilitarLetras() {
     setBotoesDisabled(false)
+    setInputDisabled(false)
 
     handleResetaJogo()
 
@@ -108,11 +110,12 @@ export default function Jogo() {
         disabled={perdeu || ganhou || botoesDisabled}
         onLetterClick={handleLetterClick}
       />
-      <div className="container-input">
-        <h2>Ja sei a palavra!</h2>
-        <input disabled={inputDisabled} type="text" />
-        <button>Chutar</button>
-      </div>
+      <Chute
+        inputDisabled={inputDisabled}
+        palavra={palavra}
+        ganhou={ganhou}
+        perdeu={perdeu}
+      />
     </div>
   )
 }
